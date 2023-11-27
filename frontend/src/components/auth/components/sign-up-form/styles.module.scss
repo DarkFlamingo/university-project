@@ -1,0 +1,29 @@
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  margin-top: 70px;
+  padding: 30px 50px 50px;
+  color: var(--color-grey);
+  text-align: center;
+  border: 1px solid var(--color-grey);
+  border-radius: 15px;
+}
+
+.title {
+  margin: 0 0 30px;
+  font-size: 40px;
+}
+
+.button {
+  width: 80%;
+  margin: 20px auto 30px;
+  font-weight: bold;
+  font-size: 15px;
+  text-transform: uppercase;
+}
+
+.link {
+  color: var(--color-link);
+  text-decoration: none;
+}

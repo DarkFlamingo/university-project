@@ -1,0 +1,25 @@
+.formWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 408px;
+  padding: var(--big-gutters);
+  color: var(--color-text-grey);
+  text-align: center;
+  background-color: var(--color-white);
+  border: 1px solid var(--color-border-light-grey);
+  border-radius: 4px;
+}
+
+.logoWrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 49px;
+}
+
+.logo {
+  height: 94px;
+}
+
+.form > label {
+  margin-bottom: var(--default-gutters);
+}

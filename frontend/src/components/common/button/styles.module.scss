@@ -1,0 +1,30 @@
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-top: var(--small-gutters);
+  padding-bottom: var(--small-gutters);
+  font-weight: bold;
+  font-family: Montserrat, sans-serif;
+  background-color: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.icon {
+  margin-right: 5px;
+}
+
+.button-style-primary {
+  color: var(--color-white);
+  background-color: var(--color-background-dark-blue);
+}
+
+.button:disabled {
+  background-color: var(--color-border-dark-grey);
+}
+
+.button-rounded {
+  border-radius: 40px;
+}
