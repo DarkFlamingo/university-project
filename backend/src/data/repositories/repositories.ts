@@ -1,8 +1,13 @@
-import { User as UserModel } from '~/data/models/models';
-import { User } from './user/user';
+import { User as UserModel, CPU as CPUModel } from '~/data/models/models';
+import { User } from './user/user.repository';
+import { CPU } from './cpu/cpu.repository';
 
 const user = new User({
   UserModel,
 });
 
-export { user };
+const cpu = new CPU({
+  CPUModel,
+});
+
+export { user, cpu };

@@ -10,11 +10,9 @@ class CPU extends AbstractModel {
 
   'threads': number;
 
-  'baseClockSpeedGHz': number;
+  'clockSpeed': number;
 
-  'maxTurboSpeedGHz': number;
-
-  'cacheMB': number;
+  'TDP': number;
 
   'price': number;
 

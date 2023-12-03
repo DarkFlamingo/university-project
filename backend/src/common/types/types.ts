@@ -7,3 +7,5 @@ export {
 } from './user/user';
 export { type ValidationSchema } from './validation/validation';
 export { type TokenPayload } from './token/token';
+export { type PriceGetAllRequestDto } from './price/price';
+export { type ResponseDto } from './general/general';

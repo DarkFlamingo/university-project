@@ -1,10 +1,9 @@
 import { FastifyPluginAsync } from 'fastify';
 import { ApiPath } from '~/common/enums/enums';
 import { ValidationSchema } from '~/common/types/types';
-import { WHITE_ROUTES } from '~/common/constants/constants';
-import { auth } from '~/services/services';
+import { auth, cpu } from '~/services/services';
 import { initAuthApi } from './auth/auth';
-import { authorization as authorizationPlugin } from '~/plugins/plugins';
+import { initPriceApi } from './price/price.api';
 
 const initApi: FastifyPluginAsync = async (fastify) => {
   fastify.setValidatorCompiler<ValidationSchema>(({ schema }) => {
@@ -13,18 +12,18 @@ const initApi: FastifyPluginAsync = async (fastify) => {
     };
   });
 
-  fastify.register(authorizationPlugin, {
-    services: {
-      auth,
-    },
-    whiteRoutes: WHITE_ROUTES,
-  });
-
   fastify.register(initAuthApi, {
     services: {
       auth,
     },
     prefix: ApiPath.AUTH,
+  });
+
+  fastify.register(initPriceApi, {
+    services: {
+      cpu,
+    },
+    prefix: ApiPath.PRICE,
   });
 };
 

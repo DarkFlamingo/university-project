@@ -7,8 +7,7 @@ enum TableName {
   COOLERS = 'coolers',
   RAM = 'ram',
   POWER_SUPPLIES = 'power_supplies',
-  SSD = 'ssd',
-  HDD = 'hdd'
+  STORAGE = 'storage',
 }
 
 export { TableName };

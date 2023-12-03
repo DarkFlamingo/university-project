@@ -1,23 +1,21 @@
 import { TableName } from '~/common/enums/enums';
 import { AbstractModel } from '../abstract/abstract.model';
 
-class SSD extends AbstractModel {
+class Storage extends AbstractModel {
   'name': string;
 
-  'storageCapacityGB': number;
+  'capacity': number;
 
   'interfaceType': string; // SATA, PCIe, etc.
 
-  'formFactor': string;
+  'readSpeed': number;
 
-  'readSpeedMBps': number;
-
-  'writeSpeedMBps': number;
+  'writeSpeed': number;
 
   'price': number;
   static get tableName(): string {
-    return TableName.SSD;
+    return TableName.STORAGE;
   }
 }
 
-export { SSD };
+export { Storage };
