@@ -14,7 +14,7 @@ class CPU {
 
   async getAllCPUByPrice(
     filters: Omit<PriceGetAllRequestDto, 'component_name'>,
-  ): Promise<ResponseDto> {
+  ): Promise<any> {
     const items = await this.#cpuRepository.getAllByPrice(filters);
 
     // eslint-disable-next-line
@@ -24,9 +24,16 @@ class CPU {
       'fulfillmentMessages': [
         {
           'text': {
-            'text': ['Text response from webhook'],
+            'text': [
+              'Header, Next line, Next line, Next line, Next line, Next line, Next line, Next line, Next line',
+            ],
           },
         },
+        ...items.map((item, index) => ({
+          'text': {
+            'text': [`${index + 1}) ${item.name} - $${item.price}`],
+          },
+        })),
       ],
     };
   }
