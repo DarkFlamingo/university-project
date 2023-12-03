@@ -5,10 +5,15 @@ import {
 } from '~/common/enums/enums';
 
 type PriceGetAllRequestDto = {
-  price: number;
-  comparison: ComparisonDirection | null;
-  order: Order | null;
-  componentName: ComponentName;
+  ['unit-currency']: [
+    {
+      amount: number;
+      currency: string;
+    },
+  ];
+  comparison: [ComparisonDirection] | null;
+  order: [Order] | null;
+  component_name: [ComponentName];
 };
 
 export { type PriceGetAllRequestDto };

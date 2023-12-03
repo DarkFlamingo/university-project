@@ -16,19 +16,20 @@ class CPU {
     this.#CPUModel = CPUModel;
   }
 
-  getAllByPrice({
-    price,
-    comparison,
-    order,
-  }: Omit<PriceGetAllRequestDto, 'componentName'>): Promise<CPUM[]> {
+  getAllByPrice(
+    payload: Omit<PriceGetAllRequestDto, 'component_name'>,
+  ): Promise<CPUM[]> {
     const query = this.#CPUModel.query().select().castTo<CPUM[]>();
 
-    if (price) {
-      if (!comparison) {
+    if (payload['unit-currency']) {
+      const [{ amount: price }] = payload['unit-currency'];
+
+      if (!payload.comparison) {
         query
           .where('price', '>=', price - PRICE_DEV)
           .andWhere('price', '<=', price + PRICE_DEV);
       } else {
+        const [comparison] = payload.comparison;
         const compDirection =
           comparison === ComparisonDirection.LESS ? '<=' : '>=';
 
@@ -36,7 +37,8 @@ class CPU {
       }
     }
 
-    if (order) {
+    if (payload.order) {
+      const [order] = payload.order;
       query.orderBy('price', order);
     }
 

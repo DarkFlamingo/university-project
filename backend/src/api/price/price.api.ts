@@ -23,14 +23,14 @@ const initPriceApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         parameters: PriceGetAllRequestDto;
       };
     };
-    Reply: ResponseDto;
   }>({
     method: HttpMethod.POST,
     url: PriceApiPath.ROOT,
     async handler(req, rep) {
-      // eslint-disable-next-line
-      console.log('Body:', req.body);
-      const { componentName, ...payload } = req.body.queryResult.parameters;
+      const {
+        component_name: [componentName],
+        ...payload
+      } = req.body.queryResult.parameters;
 
       let data;
 
@@ -45,7 +45,7 @@ const initPriceApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         }
       }
 
-      return rep.send(data).status(HttpCode.OK);
+      return rep.send(JSON.stringify(data)).status(HttpCode.OK);
     },
   });
 };

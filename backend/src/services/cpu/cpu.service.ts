@@ -13,7 +13,7 @@ class CPU {
   }
 
   async getAllCPUByPrice(
-    filters: Omit<PriceGetAllRequestDto, 'componentName'>,
+    filters: Omit<PriceGetAllRequestDto, 'component_name'>,
   ): Promise<ResponseDto> {
     const items = await this.#cpuRepository.getAllByPrice(filters);
 
@@ -21,10 +21,10 @@ class CPU {
     console.log('Items: ', items);
 
     return {
-      fulfillmentMessages: [
+      'fulfillmentMessages': [
         {
-          text: {
-            text: ['Test message'],
+          'text': {
+            'text': ['Text response from webhook'],
           },
         },
       ],
