@@ -29,7 +29,7 @@ const initPriceApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     url: PriceApiPath.ROOT,
     async handler(req, rep) {
       // eslint-disable-next-line
-      console.log("Body:", req.body)
+      console.log('Body:', req.body);
       const { componentName, ...payload } = req.body.queryResult.parameters;
 
       let data;

@@ -16,10 +16,7 @@ class AbstractRepository<ModelT extends AbstractModel> {
   }
 
   async getById(id: string): Promise<ModelT | null> {
-    const item = await this.Model
-      .$query()
-      .findById(id)
-      .castTo<ModelT | null>();
+    const item = await this.Model.$query().findById(id).castTo<ModelT | null>();
 
     if (!item) {
       return null;
