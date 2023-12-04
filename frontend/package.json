@@ -2,8 +2,8 @@
   "name": "frontend",
   "private": true,
   "engines": {
-    "node": ">=16 <17",
-    "npm": ">=8 <9"
+    "node": ">=16",
+    "npm": ">=8"
   },
   "scripts": {
     "lint:js": "npx eslint \"src/**/*.{ts,tsx}\" --resolve-plugins-relative-to .",
@@ -15,17 +15,19 @@
   "dependencies": {
     "@hookform/error-message": "2.0.0",
     "@hookform/resolvers": "2.9.3",
+    "@react-three/drei": "^9.90.0",
     "@reduxjs/toolkit": "1.8.3",
-    "shared": "file:../shared/build",
     "clsx": "1.2.0",
     "env-cmd": "10.1.0",
+    "gltfjsx": "^6.2.15",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "7.33.1",
     "react-redux": "8.0.2",
     "react-router-dom": "6.3.0",
     "react-scripts": "5.0.1",
-    "react-table": "7.8.0"
+    "react-table": "7.8.0",
+    "shared": "file:../shared/build"
   },
   "devDependencies": {
     "@types/node": "18.0.1",

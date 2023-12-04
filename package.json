@@ -2,8 +2,8 @@
   "name": "maxbuild",
   "private": "true",
   "engines": {
-    "node": ">=16 <17",
-    "npm": ">=8 <9"
+    "node": ">=16",
+    "npm": ">=8"
   },
   "scripts": {
     "move:deploy": "mv backend/build . && mv backend/node_modules build && mv frontend/build/* build/public",
@@ -50,5 +50,8 @@
   },
   "simple-git-hooks": {
     "pre-commit": "npx lint-staged"
+  },
+  "dependencies": {
+    "gltfjsx": "^6.2.15"
   }
 }
