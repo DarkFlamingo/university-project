@@ -17,16 +17,11 @@ class CPU {
   ): Promise<any> {
     const items = await this.#cpuRepository.getAllByPrice(filters);
 
-    // eslint-disable-next-line
-    console.log('Items: ', items);
-
-    return {
+    const res = {
       'fulfillmentMessages': [
         {
           'text': {
-            'text': [
-              'Header, Next line, Next line, Next line, Next line, Next line, Next line, Next line, Next line',
-            ],
+            'text': ['Some text'],
           },
         },
         ...items.map((item, index) => ({
@@ -36,6 +31,8 @@ class CPU {
         })),
       ],
     };
+
+    return res;
   }
 }
 

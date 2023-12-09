@@ -33,7 +33,7 @@ export default function Model(props) {
             <mesh name="mesh_id37001" geometry={nodes.mesh_id37001.geometry} material={materials['85']} position={[-11.384, 19.005, 1.298]} scale={1.327} />
             <mesh name="mesh_id61" geometry={nodes.mesh_id61.geometry} material={materials['93.001']} position={[-61.827, -95.116, 2.23]} scale={1.327} />
           </group>
-        </group> 
+        </group>
       </group>
     </group>
   )

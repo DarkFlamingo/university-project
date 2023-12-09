@@ -22,18 +22,20 @@
   "dependencies": {
     "@fastify/cors": "8.0.0",
     "bcrypt": "5.0.1",
-    "shared": "file:../shared/build",
+    "dialogflow": "^1.2.0",
     "dotenv": "16.0.1",
     "fastify": "4.2.0",
     "jose": "4.8.3",
     "knex": "2.1.0",
     "objection": "3.0.1",
     "pg": "8.7.3",
+    "shared": "file:../shared/build",
     "ts-node": "10.8.2",
     "tsc-alias": "1.6.11"
   },
   "devDependencies": {
     "@types/bcrypt": "5.0.0",
+    "@types/dialogflow": "^0.11.0",
     "nodemon": "2.0.18",
     "pino-pretty": "8.1.0"
   }
