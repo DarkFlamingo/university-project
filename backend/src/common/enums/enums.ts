@@ -3,4 +3,4 @@ export { AppEnvironment, ENV } from './app/app';
 export { TableName } from './db/db';
 export { HttpCode, HttpMethod } from './http/http';
 export { ExceptionMessage } from './exception/exeption';
-export { ComponentName, ComparisonDirection } from './filter/filter';
+export { ComponentName, ComparisonDirection, Order } from './filter/filter';

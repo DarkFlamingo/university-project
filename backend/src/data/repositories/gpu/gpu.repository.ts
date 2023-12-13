@@ -1,24 +1,24 @@
-import { CPU as CPUM } from '~/data/models/models';
+import { GPU as GPUM } from '~/data/models/models';
 import { PriceFilter } from '~/common/types/types';
 import { ComparisonDirection } from '~/common/enums/enums';
 
 const PRICE_DEV = 20;
 
 type Constructor = {
-  CPUModel: typeof CPUM;
+  GPUModel: typeof GPUM;
 };
 
-class CPU {
-  #CPUModel: typeof CPUM;
+class GPU {
+  #GPUModel: typeof GPUM;
 
-  constructor({ CPUModel }: Constructor) {
-    this.#CPUModel = CPUModel;
+  constructor({ GPUModel }: Constructor) {
+    this.#GPUModel = GPUModel;
   }
 
-  getAllByPrice(filters: PriceFilter): Promise<CPUM[]> {
+  getAllByPrice(filters: PriceFilter): Promise<GPUM[]> {
     const { amount, direction, order } = filters;
 
-    const query = this.#CPUModel.query().select().castTo<CPUM[]>();
+    const query = this.#GPUModel.query().select().castTo<GPUM[]>();
 
     if (amount !== null) {
       if (!direction) {
@@ -41,4 +41,4 @@ class CPU {
   }
 }
 
-export { CPU };
+export { GPU };

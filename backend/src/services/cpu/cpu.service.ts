@@ -1,5 +1,5 @@
 import { cpu as cpuRep } from '~/data/repositories/repositories';
-import { PriceGetAllRequestDto, ResponseDto } from '~/common/types/types';
+import { PriceFilter, ResponseDto } from '~/common/types/types';
 
 type Constructor = {
   cpuRepository: typeof cpuRep;
@@ -12,16 +12,14 @@ class CPU {
     this.#cpuRepository = cpuRepository;
   }
 
-  async getAllCPUByPrice(
-    filters: Omit<PriceGetAllRequestDto, 'component_name'>,
-  ): Promise<any> {
+  async getAllCPUByPrice(filters: PriceFilter): Promise<ResponseDto> {
     const items = await this.#cpuRepository.getAllByPrice(filters);
 
     const res = {
       'fulfillmentMessages': [
         {
           'text': {
-            'text': ['Some text'],
+            'text': ['CPUs upon your request: '],
           },
         },
         ...items.map((item, index) => ({

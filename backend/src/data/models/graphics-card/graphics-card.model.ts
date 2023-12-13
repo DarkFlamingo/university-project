@@ -1,7 +1,7 @@
 import { TableName } from '~/common/enums/enums';
 import { AbstractModel } from '../abstract/abstract.model';
 
-class GraphicsCard extends AbstractModel {
+class GPU extends AbstractModel {
   'name': string;
 
   'chipset': string;
@@ -21,4 +21,4 @@ class GraphicsCard extends AbstractModel {
   }
 }
 
-export { GraphicsCard };
+export { GPU };

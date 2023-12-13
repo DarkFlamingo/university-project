@@ -1,11 +1,17 @@
 import { FastifyPluginAsync } from 'fastify';
-import { cpu as cpuServ } from '~/services/services';
+import {
+  cpu as cpuServ,
+  cooler as coolerServ,
+  motherboard as motherboardServ,
+  gpu as gpuServ,
+} from '~/services/services';
 import {
   HttpCode,
   HttpMethod,
   PriceApiPath,
   ComponentName,
 } from '~/common/enums/enums';
+import { getPriceFilterFromRequest } from '~/helpers/helpers';
 import { PriceGetAllRequestDto } from '~/common/types/types';
 
 import * as df from 'dialogflow';
@@ -14,11 +20,19 @@ import { type DetectIntentRequest } from 'dialogflow';
 type Options = {
   services: {
     cpu: typeof cpuServ;
+    cooler: typeof coolerServ;
+    motherboard: typeof motherboardServ;
+    gpu: typeof gpuServ;
   };
 };
 
 const initPriceApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
-  const { cpu: cpuService } = opts.services;
+  const {
+    cpu: cpuService,
+    cooler: coolerService,
+    motherboard: motherboardService,
+    gpu: gpuService,
+  } = opts.services;
 
   fastify.route({
     method: 'GET',
@@ -85,12 +99,23 @@ const initPriceApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
 
       let data;
 
+      const filter = getPriceFilterFromRequest(req.body.queryResult.parameters);
+
       switch (componentName) {
         case ComponentName.CPU: {
-          data = await cpuService.getAllCPUByPrice(payload);
+          data = await cpuService.getAllCPUByPrice(filter);
           break;
         }
         case ComponentName.COOLER: {
+          data = await coolerService.getAllCoolerByPrice(filter);
+          break;
+        }
+        case ComponentName.MOTHERBOARD: {
+          data = await motherboardService.getAllCoolerByPrice(filter);
+          break;
+        }
+        case ComponentName.GPU: {
+          data = await gpuService.getAllGPUByPrice(filter);
           break;
         }
       }

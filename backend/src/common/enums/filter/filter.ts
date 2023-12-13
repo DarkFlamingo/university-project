@@ -1,1 +1,1 @@
-export { ComponentName, ComparisonDirection } from 'shared/common/enums/enums';
+export { ComponentName, ComparisonDirection, Order } from 'shared/common/enums/enums';

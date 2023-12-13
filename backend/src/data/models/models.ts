@@ -2,7 +2,7 @@ import { User } from './user/user.model';
 import { Motherboard } from './motherboard/motherboard.model';
 import { Cooler } from './cooler/cooler.model';
 import { CPU } from './cpu/cpu.model';
-import { GraphicsCard } from './graphics-card/graphics-card.model';
+import { GPU } from './graphics-card/graphics-card.model';
 import { PowerSupply } from './power-supply/power-supply.model';
 import { RAM } from './ram/ram.model';
 import { Storage } from './storage/storage.model';
@@ -16,7 +16,7 @@ const cooler = new Cooler();
 
 const cpu = new CPU();
 
-const graphicsCard = new GraphicsCard();
+const gpu = new GPU();
 
 const powerSupply = new PowerSupply();
 
@@ -33,8 +33,8 @@ export {
   Cooler,
   cpu,
   CPU,
-  graphicsCard,
-  GraphicsCard,
+  gpu,
+  GPU,
   powerSupply,
   PowerSupply,
   ram,

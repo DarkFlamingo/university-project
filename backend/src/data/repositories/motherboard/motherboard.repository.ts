@@ -1,24 +1,24 @@
-import { CPU as CPUM } from '~/data/models/models';
+import { Motherboard as MotherboardM } from '~/data/models/models';
 import { PriceFilter } from '~/common/types/types';
 import { ComparisonDirection } from '~/common/enums/enums';
 
 const PRICE_DEV = 20;
 
 type Constructor = {
-  CPUModel: typeof CPUM;
+  MotherboardModel: typeof MotherboardM;
 };
 
-class CPU {
-  #CPUModel: typeof CPUM;
+class Motherboard {
+  #MotherboardModel: typeof MotherboardM;
 
-  constructor({ CPUModel }: Constructor) {
-    this.#CPUModel = CPUModel;
+  constructor({ MotherboardModel }: Constructor) {
+    this.#MotherboardModel = MotherboardModel;
   }
 
-  getAllByPrice(filters: PriceFilter): Promise<CPUM[]> {
+  getAllByPrice(filters: PriceFilter): Promise<MotherboardM[]> {
     const { amount, direction, order } = filters;
 
-    const query = this.#CPUModel.query().select().castTo<CPUM[]>();
+    const query = this.#MotherboardModel.query().select().castTo<MotherboardM[]>();
 
     if (amount !== null) {
       if (!direction) {
@@ -41,4 +41,4 @@ class CPU {
   }
 }
 
-export { CPU };
+export { Motherboard };

@@ -1,24 +1,24 @@
-import { CPU as CPUM } from '~/data/models/models';
+import { Cooler as CoolerM } from '~/data/models/models';
 import { PriceFilter } from '~/common/types/types';
 import { ComparisonDirection } from '~/common/enums/enums';
 
 const PRICE_DEV = 20;
 
 type Constructor = {
-  CPUModel: typeof CPUM;
+  CoolerModel: typeof CoolerM;
 };
 
-class CPU {
-  #CPUModel: typeof CPUM;
+class Cooler {
+  #CoolerModel: typeof CoolerM;
 
-  constructor({ CPUModel }: Constructor) {
-    this.#CPUModel = CPUModel;
+  constructor({ CoolerModel }: Constructor) {
+    this.#CoolerModel = CoolerModel;
   }
 
-  getAllByPrice(filters: PriceFilter): Promise<CPUM[]> {
+  getAllByPrice(filters: PriceFilter): Promise<CoolerM[]> {
     const { amount, direction, order } = filters;
 
-    const query = this.#CPUModel.query().select().castTo<CPUM[]>();
+    const query = this.#CoolerModel.query().select().castTo<CoolerM[]>();
 
     if (amount !== null) {
       if (!direction) {
@@ -41,4 +41,4 @@ class CPU {
   }
 }
 
-export { CPU };
+export { Cooler };
