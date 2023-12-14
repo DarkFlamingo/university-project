@@ -59,7 +59,7 @@ const powerSupply = new PowerSupply({
 
 const pcCase = new PcCase({
   pcCaseRepository,
-})
+});
 
 const user = new User({
   userRepository,

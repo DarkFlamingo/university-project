@@ -106,10 +106,12 @@ const initPriceApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     method: HttpMethod.POST,
     url: PriceApiPath.ROOT,
     async handler(req, rep) {
-      const {
-        component_name: [componentName],
-        ...payload
-      } = req.body.queryResult.parameters;
+      const { component_name: componentNames } =
+        req.body.queryResult.parameters;
+
+      const componentName = componentNames.find((it) =>
+        Object.values(ComponentName).some((name) => name === it),
+      );
 
       let data;
 
@@ -149,6 +151,13 @@ const initPriceApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
           break;
         }
         default: {
+          // eslint-disable-next-line
+          console.log('Request components name: ', componentName, '\n');
+          // eslint-disable-next-line
+          console.log('Request: ', req.body.queryResult.parameters, '\n');
+          // eslint-disable-next-line
+          console.log('Filters: ', filter, '\n');
+
           data = getDialogResponse(
             'Unfortunately, we do not have this type of components',
           );

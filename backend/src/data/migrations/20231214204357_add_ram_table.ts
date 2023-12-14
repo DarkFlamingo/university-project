@@ -2,7 +2,7 @@ import { Knex } from 'knex';
 import { getFormattedISODate } from '~/helpers/helpers';
 import { TableName } from '~/common/enums/enums';
 
-const TABLE_NAME = TableName.GRAPHICS_CARDS;
+const TABLE_NAME = TableName.RAM;
 
 async function up(knex: Knex): Promise<void> {
   const dateNowISO = getFormattedISODate(new Date());

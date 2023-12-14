@@ -1,7 +1,17 @@
 import { FastifyPluginAsync } from 'fastify';
 import { ApiPath } from '~/common/enums/enums';
 import { ValidationSchema } from '~/common/types/types';
-import { auth, cpu } from '~/services/services';
+import {
+  auth,
+  cpu,
+  cooler,
+  motherboard,
+  gpu,
+  ram,
+  storage,
+  powerSupply,
+  pcCase,
+} from '~/services/services';
 import { initAuthApi } from './auth/auth';
 import { initPriceApi } from './price/price.api';
 
@@ -22,6 +32,13 @@ const initApi: FastifyPluginAsync = async (fastify) => {
   fastify.register(initPriceApi, {
     services: {
       cpu,
+      cooler,
+      motherboard,
+      gpu,
+      ram,
+      storage,
+      powerSupply,
+      pcCase,
     },
     prefix: ApiPath.PRICE,
   });

@@ -10,7 +10,7 @@ class Cooler extends AbstractModel {
 
   'heatPipeCount': number;
 
-  'maxTDP': number; // Maximum Thermal Design Power
+  'max_tdp': number; // Maximum Thermal Design Power
 
   'price': number;
 
