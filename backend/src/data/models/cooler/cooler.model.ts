@@ -4,13 +4,13 @@ import { AbstractModel } from '../abstract/abstract.model';
 class Cooler extends AbstractModel {
   'name': string;
 
-  'socketCompatibility': string[]; // List of CPU socket types it's compatible with
+  'socketCompatibility': string; // List of CPU socket types it's compatible with
 
-  'fanSizeMM': number;
+  'fanSize': number;
 
   'heatPipeCount': number;
 
-  'maxTDPWatts': number; // Maximum Thermal Design Power
+  'maxTDP': number; // Maximum Thermal Design Power
 
   'price': number;
 

@@ -6,13 +6,13 @@ class GPU extends AbstractModel {
 
   'chipset': string;
 
-  'memoryGB': number;
+  'memory': number;
 
   'memoryType': string;
 
-  'coreClockMHz': number;
+  'coreClock': number;
 
-  'boostClockMHz': number;
+  'boostClock': number;
 
   'price': number;
 

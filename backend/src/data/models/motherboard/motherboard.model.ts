@@ -8,7 +8,7 @@ class Motherboard extends AbstractModel {
 
   'formFactor': string;
 
-  'maxMemorySizeGB': number;
+  'maxMemorySize': number;
 
   'ramSlots': number;
 

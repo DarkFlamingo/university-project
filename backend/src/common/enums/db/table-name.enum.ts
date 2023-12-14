@@ -8,6 +8,7 @@ enum TableName {
   RAM = 'ram',
   POWER_SUPPLIES = 'power_supplies',
   STORAGE = 'storage',
+  CASES = 'cases',
 }
 
 export { TableName };

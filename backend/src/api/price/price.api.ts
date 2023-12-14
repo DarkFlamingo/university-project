@@ -4,6 +4,10 @@ import {
   cooler as coolerServ,
   motherboard as motherboardServ,
   gpu as gpuServ,
+  ram as ramServ,
+  storage as storageServ,
+  powerSupply as powerSupplyServ,
+  pcCase as pcCaseServ,
 } from '~/services/services';
 import {
   HttpCode,
@@ -11,7 +15,10 @@ import {
   PriceApiPath,
   ComponentName,
 } from '~/common/enums/enums';
-import { getPriceFilterFromRequest } from '~/helpers/helpers';
+import {
+  getPriceFilterFromRequest,
+  getDialogResponse,
+} from '~/helpers/helpers';
 import { PriceGetAllRequestDto } from '~/common/types/types';
 
 import * as df from 'dialogflow';
@@ -23,6 +30,10 @@ type Options = {
     cooler: typeof coolerServ;
     motherboard: typeof motherboardServ;
     gpu: typeof gpuServ;
+    ram: typeof ramServ;
+    storage: typeof storageServ;
+    powerSupply: typeof powerSupplyServ;
+    pcCase: typeof pcCaseServ;
   };
 };
 
@@ -32,6 +43,9 @@ const initPriceApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     cooler: coolerService,
     motherboard: motherboardService,
     gpu: gpuService,
+    ram: ramService,
+    storage: storageService,
+    pcCase: pcCaseService,
   } = opts.services;
 
   fastify.route({
@@ -116,6 +130,28 @@ const initPriceApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
         }
         case ComponentName.GPU: {
           data = await gpuService.getAllGPUByPrice(filter);
+          break;
+        }
+        case ComponentName.RAM: {
+          data = await ramService.getAllCoolerByPrice(filter);
+          break;
+        }
+        case ComponentName.STORAGE: {
+          data = await storageService.getAllCoolerByPrice(filter);
+          break;
+        }
+        case ComponentName.POWER_SUPPLY: {
+          data = await powerSupplyServ.getAllCoolerByPrice(filter);
+          break;
+        }
+        case ComponentName.CASE: {
+          data = await pcCaseService.getAllCoolerByPrice(filter);
+          break;
+        }
+        default: {
+          data = getDialogResponse(
+            'Unfortunately, we do not have this type of components',
+          );
           break;
         }
       }

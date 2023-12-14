@@ -4,6 +4,10 @@ import {
   cooler as coolerRepository,
   motherboard as motherboardRepository,
   gpu as gpuRepository,
+  ram as ramRepository,
+  storage as storageRepository,
+  powerSupply as powerSupplyRepository,
+  pcCase as pcCaseRepository,
 } from '~/data/repositories/repositories';
 import { Auth } from './auth/auth.service';
 import { User } from './user/user.service';
@@ -13,6 +17,10 @@ import { CPU } from './cpu/cpu.service';
 import { Cooler } from './cooler/cooler.service';
 import { Motherboard } from './motherboard/motherboard.service';
 import { GPU } from './gpu/gpu.service';
+import { RAM } from './ram/ram.service';
+import { Storage } from './storage/storage.service';
+import { PowerSupply } from './power-supply/power-supply.service';
+import { PcCase } from './pc-case/pc-case.service';
 import { USER_PASSWORD_SALT_ROUNDS } from '~/common/constants/user.constants';
 
 const token = new Token();
@@ -37,6 +45,22 @@ const gpu = new GPU({
   gpuRepository,
 });
 
+const ram = new RAM({
+  ramRepository,
+});
+
+const storage = new Storage({
+  storageRepository,
+});
+
+const powerSupply = new PowerSupply({
+  powerSupplyRepository,
+});
+
+const pcCase = new PcCase({
+  pcCaseRepository,
+})
+
 const user = new User({
   userRepository,
   encryptService: encrypt,
@@ -49,4 +73,17 @@ const auth = new Auth({
   encryptService: encrypt,
 });
 
-export { user, auth, encrypt, token, cpu, cooler, motherboard, gpu };
+export {
+  user,
+  auth,
+  encrypt,
+  token,
+  cpu,
+  cooler,
+  motherboard,
+  gpu,
+  ram,
+  storage,
+  powerSupply,
+  pcCase,
+};
