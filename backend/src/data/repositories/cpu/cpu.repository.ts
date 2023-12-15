@@ -1,8 +1,10 @@
 import { CPU as CPUM } from '~/data/models/models';
 import { PriceFilter } from '~/common/types/types';
+import { Order } from '~/common/enums/enums';
 import { ComparisonDirection } from '~/common/enums/enums';
 
 const PRICE_DEV = 20;
+const PRICE_HUGE_DEV = 50;
 
 type Constructor = {
   CPUModel: typeof CPUM;
@@ -13,6 +15,21 @@ class CPU {
 
   constructor({ CPUModel }: Constructor) {
     this.#CPUModel = CPUModel;
+  }
+
+  async getItemInPriceRangeOrLower(price: number): Promise<CPUM | null> {
+    const cpu = await this.#CPUModel
+      .query()
+      .select()
+      .where('price', '<=', price + PRICE_HUGE_DEV)
+      .orderBy('price', Order.DESC)
+      .first();
+
+    if (!cpu) {
+      return null;
+    }
+
+    return cpu;
   }
 
   getAllByPrice(filters: PriceFilter): Promise<CPUM[]> {

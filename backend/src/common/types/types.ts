@@ -9,4 +9,6 @@ export { type ValidationSchema } from './validation/validation';
 export { type TokenPayload } from './token/token';
 export { type PriceGetAllRequestDto } from './price/price';
 export { type ResponseDto } from './general/general';
-export { type PriceFilter } from './filters/filters';
+export { type PriceFilter, type ConfigurePCFilter } from './filters/filters';
+export { type PriceRequest, type ConfigurePCRequest } from './request/request';
+export { type ComponentsAmounts } from './configure-pc/configure-pc';

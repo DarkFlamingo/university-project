@@ -1,8 +1,9 @@
 import { Storage as StorageM } from '~/data/models/models';
 import { PriceFilter } from '~/common/types/types';
-import { ComparisonDirection } from '~/common/enums/enums';
+import { ComparisonDirection, Order } from '~/common/enums/enums';
 
 const PRICE_DEV = 20;
+const PRICE_HUGE_DEV = 50;
 
 type Constructor = {
   StorageModel: typeof StorageM;
@@ -13,6 +14,21 @@ class Storage {
 
   constructor({ StorageModel }: Constructor) {
     this.#StorageModel = StorageModel;
+  }
+
+  async getItemInPriceRangeOrLower(price: number): Promise<StorageM | null> {
+    const cpu = await this.#StorageModel
+      .query()
+      .select()
+      .where('price', '<=', price + PRICE_HUGE_DEV)
+      .orderBy('price', Order.DESC)
+      .first();
+
+    if (!cpu) {
+      return null;
+    }
+
+    return cpu;
   }
 
   getAllByPrice(filters: PriceFilter): Promise<StorageM[]> {

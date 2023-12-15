@@ -1,4 +1,7 @@
+import * as df from 'dialogflow';
+import { type DetectIntentRequest } from 'dialogflow';
 import { FastifyPluginAsync } from 'fastify';
+
 import {
   cpu as cpuServ,
   cooler as coolerServ,
@@ -8,21 +11,27 @@ import {
   storage as storageServ,
   powerSupply as powerSupplyServ,
   pcCase as pcCaseServ,
+  price as priceServ,
 } from '~/services/services';
+
+import {
+  getConfigurePCFilterFromRequest,
+  getPriceFilterFromRequest,
+  getDialogResponse,
+} from '~/helpers/helpers';
+
 import {
   HttpCode,
   HttpMethod,
   PriceApiPath,
   ComponentName,
+  WebhookAction,
 } from '~/common/enums/enums';
 import {
-  getPriceFilterFromRequest,
-  getDialogResponse,
-} from '~/helpers/helpers';
-import { PriceGetAllRequestDto } from '~/common/types/types';
-
-import * as df from 'dialogflow';
-import { type DetectIntentRequest } from 'dialogflow';
+  PriceRequest,
+  ResponseDto,
+  ConfigurePCRequest,
+} from '~/common/types/types';
 
 type Options = {
   services: {
@@ -34,6 +43,7 @@ type Options = {
     storage: typeof storageServ;
     powerSupply: typeof powerSupplyServ;
     pcCase: typeof pcCaseServ;
+    price: typeof priceServ;
   };
 };
 
@@ -46,6 +56,7 @@ const initPriceApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     ram: ramService,
     storage: storageService,
     pcCase: pcCaseService,
+    price: priceService,
   } = opts.services;
 
   fastify.route({
@@ -99,75 +110,102 @@ const initPriceApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
   fastify.route<{
     Body: {
       queryResult: {
-        parameters: PriceGetAllRequestDto;
+        action: WebhookAction;
+        parameters: unknown;
       };
     };
   }>({
     method: HttpMethod.POST,
     url: PriceApiPath.ROOT,
     async handler(req, rep) {
-      const { component_name: componentNames } =
-        req.body.queryResult.parameters;
+      const {
+        queryResult: { action, parameters },
+      } = req.body;
 
-      const componentName = componentNames.find((it) =>
-        Object.values(ComponentName).some((name) => name === it),
-      );
+      // eslint-disable-next-line
+      console.log("Params: ", parameters);
 
-      let data;
+      switch (action) {
+        case WebhookAction.PRICE_INTENT: {
+          const data = await handlePriceWebhook(parameters as PriceRequest);
 
-      const filter = getPriceFilterFromRequest(req.body.queryResult.parameters);
-
-      switch (componentName) {
-        case ComponentName.CPU: {
-          data = await cpuService.getAllCPUByPrice(filter);
-          break;
+          return rep.code(HttpCode.OK).send(JSON.stringify(data));
         }
-        case ComponentName.COOLER: {
-          data = await coolerService.getAllCoolerByPrice(filter);
-          break;
-        }
-        case ComponentName.MOTHERBOARD: {
-          data = await motherboardService.getAllCoolerByPrice(filter);
-          break;
-        }
-        case ComponentName.GPU: {
-          data = await gpuService.getAllGPUByPrice(filter);
-          break;
-        }
-        case ComponentName.RAM: {
-          data = await ramService.getAllCoolerByPrice(filter);
-          break;
-        }
-        case ComponentName.STORAGE: {
-          data = await storageService.getAllCoolerByPrice(filter);
-          break;
-        }
-        case ComponentName.POWER_SUPPLY: {
-          data = await powerSupplyServ.getAllCoolerByPrice(filter);
-          break;
-        }
-        case ComponentName.CASE: {
-          data = await pcCaseService.getAllCoolerByPrice(filter);
-          break;
-        }
-        default: {
-          // eslint-disable-next-line
-          console.log('Request components name: ', componentName, '\n');
-          // eslint-disable-next-line
-          console.log('Request: ', req.body.queryResult.parameters, '\n');
-          // eslint-disable-next-line
-          console.log('Filters: ', filter, '\n');
-
-          data = getDialogResponse(
-            'Unfortunately, we do not have this type of components',
+        case WebhookAction.CONFIGURE_PC_INTENT: {
+          const data = await handleConfigurePCWebhook(
+            parameters as ConfigurePCRequest,
           );
-          break;
+
+          return rep.code(HttpCode.OK).send(JSON.stringify(data));
         }
       }
-
-      return rep.send(JSON.stringify(data)).status(HttpCode.OK);
     },
   });
+
+  async function handlePriceWebhook(
+    params: PriceRequest,
+  ): Promise<ResponseDto> {
+    const { component_name: componentNames } = params;
+
+    const componentName = componentNames.find((it) =>
+      Object.values(ComponentName).some((name) => name === it),
+    );
+
+    const filter = getPriceFilterFromRequest(params);
+
+    switch (componentName) {
+      case ComponentName.CPU: {
+        return cpuService.getAllCPUByPrice(filter);
+      }
+      case ComponentName.COOLER: {
+        return coolerService.getAllCoolerByPrice(filter);
+      }
+      case ComponentName.MOTHERBOARD: {
+        return motherboardService.getAllCoolerByPrice(filter);
+      }
+      case ComponentName.GPU: {
+        return gpuService.getAllGPUByPrice(filter);
+      }
+      case ComponentName.RAM: {
+        return ramService.getAllCoolerByPrice(filter);
+      }
+      case ComponentName.STORAGE: {
+        return storageService.getAllCoolerByPrice(filter);
+      }
+      case ComponentName.POWER_SUPPLY: {
+        return powerSupplyServ.getAllCoolerByPrice(filter);
+      }
+      case ComponentName.CASE: {
+        return pcCaseService.getAllCoolerByPrice(filter);
+      }
+      default: {
+        // eslint-disable-next-line
+        console.log('Request components name: ', componentName, '\n');
+        // eslint-disable-next-line
+        console.log('Request: ', params, '\n');
+        // eslint-disable-next-line
+        console.log('Filters: ', filter, '\n');
+
+        return getDialogResponse(
+          'Unfortunately, we do not have this type of components',
+        );
+      }
+    }
+  }
+
+  async function handleConfigurePCWebhook(
+    params: ConfigurePCRequest,
+  ): Promise<ResponseDto> {
+    const { price } = getConfigurePCFilterFromRequest(params);
+
+    if (!price) {
+      return getDialogResponse(
+        'Unfortunately we could not fulfill the request, provide please specific price',
+      );
+    }
+
+    return priceService.getConfiguredPcDetailsByPrice(price);
+  }
 };
 
 export { initPriceApi };

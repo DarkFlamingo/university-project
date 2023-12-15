@@ -1,8 +1,9 @@
 import { Motherboard as MotherboardM } from '~/data/models/models';
 import { PriceFilter } from '~/common/types/types';
-import { ComparisonDirection } from '~/common/enums/enums';
+import { ComparisonDirection, Order } from '~/common/enums/enums';
 
 const PRICE_DEV = 20;
+const PRICE_HUGE_DEV = 50;
 
 type Constructor = {
   MotherboardModel: typeof MotherboardM;
@@ -15,10 +16,30 @@ class Motherboard {
     this.#MotherboardModel = MotherboardModel;
   }
 
+  async getItemInPriceRangeOrLower(
+    price: number,
+  ): Promise<MotherboardM | null> {
+    const cpu = await this.#MotherboardModel
+      .query()
+      .select()
+      .where('price', '<=', price + PRICE_HUGE_DEV)
+      .orderBy('price', Order.DESC)
+      .first();
+
+    if (!cpu) {
+      return null;
+    }
+
+    return cpu;
+  }
+
   getAllByPrice(filters: PriceFilter): Promise<MotherboardM[]> {
     const { amount, direction, order } = filters;
 
-    const query = this.#MotherboardModel.query().select().castTo<MotherboardM[]>();
+    const query = this.#MotherboardModel
+      .query()
+      .select()
+      .castTo<MotherboardM[]>();
 
     if (amount !== null) {
       if (!direction) {

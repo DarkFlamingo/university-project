@@ -1,8 +1,9 @@
 import { GPU as GPUM } from '~/data/models/models';
 import { PriceFilter } from '~/common/types/types';
-import { ComparisonDirection } from '~/common/enums/enums';
+import { ComparisonDirection, Order } from '~/common/enums/enums';
 
 const PRICE_DEV = 20;
+const PRICE_HUGE_DEV = 50;
 
 type Constructor = {
   GPUModel: typeof GPUM;
@@ -13,6 +14,21 @@ class GPU {
 
   constructor({ GPUModel }: Constructor) {
     this.#GPUModel = GPUModel;
+  }
+
+  async getItemInPriceRangeOrLower(price: number): Promise<GPUM | null> {
+    const cpu = await this.#GPUModel
+      .query()
+      .select()
+      .where('price', '<=', price + PRICE_HUGE_DEV)
+      .orderBy('price', Order.DESC)
+      .first();
+
+    if (!cpu) {
+      return null;
+    }
+
+    return cpu;
   }
 
   getAllByPrice(filters: PriceFilter): Promise<GPUM[]> {

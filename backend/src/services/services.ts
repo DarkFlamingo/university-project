@@ -21,6 +21,7 @@ import { RAM } from './ram/ram.service';
 import { Storage } from './storage/storage.service';
 import { PowerSupply } from './power-supply/power-supply.service';
 import { PcCase } from './pc-case/pc-case.service';
+import { Price } from './price/price';
 import { USER_PASSWORD_SALT_ROUNDS } from '~/common/constants/user.constants';
 
 const token = new Token();
@@ -73,6 +74,17 @@ const auth = new Auth({
   encryptService: encrypt,
 });
 
+const price = new Price({
+  cpuRepository,
+  coolerRepository,
+  motherboardRepository,
+  gpuRepository,
+  ramRepository,
+  storageRepository,
+  powerSupplyRepository,
+  pcCaseRepository,
+});
+
 export {
   user,
   auth,
@@ -86,4 +98,5 @@ export {
   storage,
   powerSupply,
   pcCase,
+  price,
 };

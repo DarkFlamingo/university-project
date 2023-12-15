@@ -1,8 +1,9 @@
 import { PcCase as PcCaseM } from '~/data/models/models';
 import { PriceFilter } from '~/common/types/types';
-import { ComparisonDirection } from '~/common/enums/enums';
+import { ComparisonDirection, Order } from '~/common/enums/enums';
 
 const PRICE_DEV = 20;
+const PRICE_HUGE_DEV = 50;
 
 type Constructor = {
   PcCaseModel: typeof PcCaseM;
@@ -13,6 +14,21 @@ class PcCase {
 
   constructor({ PcCaseModel }: Constructor) {
     this.#PcCaseModel = PcCaseModel;
+  }
+
+  async getItemInPriceRangeOrLower(price: number): Promise<PcCaseM | null> {
+    const cpu = await this.#PcCaseModel
+      .query()
+      .select()
+      .where('price', '<=', price + PRICE_HUGE_DEV)
+      .orderBy('price', Order.DESC)
+      .first();
+
+    if (!cpu) {
+      return null;
+    }
+
+    return cpu;
   }
 
   getAllByPrice(filters: PriceFilter): Promise<PcCaseM[]> {

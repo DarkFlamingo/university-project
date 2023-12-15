@@ -1,8 +1,9 @@
 import { RAM as RAMM } from '~/data/models/models';
 import { PriceFilter } from '~/common/types/types';
-import { ComparisonDirection } from '~/common/enums/enums';
+import { ComparisonDirection, Order } from '~/common/enums/enums';
 
 const PRICE_DEV = 20;
+const PRICE_HUGE_DEV = 50;
 
 type Constructor = {
   RAMModel: typeof RAMM;
@@ -13,6 +14,21 @@ class RAM {
 
   constructor({ RAMModel }: Constructor) {
     this.#RAMModel = RAMModel;
+  }
+
+  async getItemInPriceRangeOrLower(price: number): Promise<RAMM | null> {
+    const cpu = await this.#RAMModel
+      .query()
+      .select()
+      .where('price', '<=', price + PRICE_HUGE_DEV)
+      .orderBy('price', Order.DESC)
+      .first();
+
+    if (!cpu) {
+      return null;
+    }
+
+    return cpu;
   }
 
   getAllByPrice(filters: PriceFilter): Promise<RAMM[]> {

@@ -11,6 +11,7 @@ import {
   storage,
   powerSupply,
   pcCase,
+  price,
 } from '~/services/services';
 import { initAuthApi } from './auth/auth';
 import { initPriceApi } from './price/price.api';
@@ -39,6 +40,7 @@ const initApi: FastifyPluginAsync = async (fastify) => {
       storage,
       powerSupply,
       pcCase,
+      price,
     },
     prefix: ApiPath.PRICE,
   });
