@@ -123,7 +123,7 @@ const initPriceApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
       } = req.body;
 
       // eslint-disable-next-line
-      console.log("Params: ", parameters);
+      console.log('Params: ', parameters);
 
       switch (action) {
         case WebhookAction.PRICE_INTENT: {
