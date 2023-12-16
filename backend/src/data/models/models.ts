@@ -8,6 +8,7 @@ import { RAM } from './ram/ram.model';
 import { Storage } from './storage/storage.model';
 import { PcCase } from './pc-case/pc-case.model';
 import { AbstractModel } from './abstract/abstract.model';
+import { Guide } from './guide/guide.model';
 
 const user = new User();
 
@@ -26,6 +27,8 @@ const ram = new RAM();
 const storage = new Storage();
 
 const pcCase = new PcCase();
+
+const guide = new Guide();
 
 export {
   user,
@@ -46,5 +49,7 @@ export {
   Storage,
   pcCase,
   PcCase,
+  guide,
+  Guide,
   AbstractModel,
 };

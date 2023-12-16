@@ -12,6 +12,7 @@ import {
   powerSupply as powerSupplyServ,
   pcCase as pcCaseServ,
   price as priceServ,
+  guide as guideServ,
 } from '~/services/services';
 
 import {
@@ -31,6 +32,7 @@ import {
   PriceRequest,
   ResponseDto,
   ConfigurePCRequest,
+  GetInstallGuideRequest,
 } from '~/common/types/types';
 
 type Options = {
@@ -44,6 +46,7 @@ type Options = {
     powerSupply: typeof powerSupplyServ;
     pcCase: typeof pcCaseServ;
     price: typeof priceServ;
+    guide: typeof guideServ;
   };
 };
 
@@ -57,6 +60,7 @@ const initPriceApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     storage: storageService,
     pcCase: pcCaseService,
     price: priceService,
+    guide: guideService,
   } = opts.services;
 
   fastify.route({
@@ -138,7 +142,16 @@ const initPriceApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
 
           return rep.code(HttpCode.OK).send(JSON.stringify(data));
         }
+        case WebhookAction.INSTALL_GUIDE: {
+          const data = await handleGetComponentsGuide(
+            parameters as GetInstallGuideRequest,
+          );
+
+          return rep.code(HttpCode.OK).send(JSON.stringify(data));
+        }
       }
+
+      return rep.code(HttpCode.NOT_FOUND);
     },
   });
 
@@ -205,6 +218,20 @@ const initPriceApi: FastifyPluginAsync<Options> = async (fastify, opts) => {
     }
 
     return priceService.getConfiguredPcDetailsByPrice(price);
+  }
+
+  async function handleGetComponentsGuide(
+    params: GetInstallGuideRequest,
+  ): Promise<ResponseDto> {
+    const { component_name: componentName } = params;
+
+    if (!componentName) {
+      return getDialogResponse(
+        'Unfortunately, we do not have instructions for installing this type of component.',
+      );
+    }
+
+    return guideService.getGuideListByComponentName(componentName);
   }
 };
 

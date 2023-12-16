@@ -8,6 +8,7 @@ import {
   storage as storageRepository,
   powerSupply as powerSupplyRepository,
   pcCase as pcCaseRepository,
+  guide as guideRepository,
 } from '~/data/repositories/repositories';
 import { Auth } from './auth/auth.service';
 import { User } from './user/user.service';
@@ -21,7 +22,8 @@ import { RAM } from './ram/ram.service';
 import { Storage } from './storage/storage.service';
 import { PowerSupply } from './power-supply/power-supply.service';
 import { PcCase } from './pc-case/pc-case.service';
-import { Price } from './price/price';
+import { Guide } from './guide/guide.service';
+import { Price } from './price/price.service';
 import { USER_PASSWORD_SALT_ROUNDS } from '~/common/constants/user.constants';
 
 const token = new Token();
@@ -85,6 +87,10 @@ const price = new Price({
   pcCaseRepository,
 });
 
+const guide = new Guide({
+  guideRepository,
+});
+
 export {
   user,
   auth,
@@ -99,4 +105,5 @@ export {
   powerSupply,
   pcCase,
   price,
+  guide,
 };

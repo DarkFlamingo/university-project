@@ -8,6 +8,7 @@ import {
   Storage as StorageModel,
   PowerSupply as PowerSupplyModel,
   PcCase as PcCaseModel,
+  Guide as GuideModel,
 } from '~/data/models/models';
 import { User } from './user/user.repository';
 import { CPU } from './cpu/cpu.repository';
@@ -18,6 +19,7 @@ import { RAM } from './ram/ram.repository';
 import { Storage } from './storage/storage.repository';
 import { PowerSupply } from './power-supply/power-supply.repository';
 import { PcCase } from './pc-case/pc-case.repository';
+import { Guide } from './guide/guide.repository';
 
 const user = new User({
   UserModel,
@@ -55,6 +57,10 @@ const pcCase = new PcCase({
   PcCaseModel,
 });
 
+const guide = new Guide({
+  GuideModel,
+});
+
 export {
   user,
   cpu,
@@ -65,4 +71,5 @@ export {
   storage,
   powerSupply,
   pcCase,
+  guide,
 };
