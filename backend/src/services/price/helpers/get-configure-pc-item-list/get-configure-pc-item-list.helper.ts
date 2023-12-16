@@ -8,6 +8,7 @@ import {
   Storage as StorageModel,
   PcCase as PcCaseModel,
 } from '~/data/models/models';
+import { getRoundedNumber } from '~/helpers/helpers';
 
 const getConfiguredPcItemList = ({
   motherboard,
@@ -39,15 +40,15 @@ const getConfiguredPcItemList = ({
     pcCase.price;
 
   return [
-    `CPU: ${cpu.name} - $${cpu.price}`,
-    `Cooler: ${cooler.name} - $${cooler.price}`,
-    `Motherboard: ${motherboard.name} - $${motherboard.price}`,
-    `GPU: ${gpu.name} - $${gpu.price}`,
-    `Power Supply: ${powerSupply.name} - $${powerSupply.price}`,
-    `RAM: ${ram.name} - $${ram.price}`,
-    `Storage: ${storage.name} - $${storage.price}`,
-    `Case: ${pcCase.name} - $${pcCase.price}`,
-    `Total Amount: $${totalAmount}`,
+    `CPU: ${cpu.name} — $${cpu.price}`,
+    `Cooler: ${cooler.name} — $${cooler.price}`,
+    `Motherboard: ${motherboard.name} — $${motherboard.price}`,
+    `GPU: ${gpu.name} — $${gpu.price}`,
+    `Power Supply: ${powerSupply.name} — $${powerSupply.price}`,
+    `RAM: ${ram.name} — $${ram.price}`,
+    `Storage: ${storage.name} — $${storage.price}`,
+    `Case: ${pcCase.name} — $${pcCase.price}`,
+    `Total Amount: $${getRoundedNumber(totalAmount)}`,
   ];
 };
 
