@@ -53,7 +53,7 @@ class GPU {
       query.orderBy('price', order);
     }
 
-    return query.execute();
+    return query.limit(10).execute();
   }
 }
 
