@@ -19,7 +19,7 @@ class PcCase {
       'fulfillmentMessages': [
         {
           'text': {
-            'text': ['Power supplies upon your request'],
+            'text': ['PC cases upon your request'],
           },
         },
         ...items.map((item, index) => ({
