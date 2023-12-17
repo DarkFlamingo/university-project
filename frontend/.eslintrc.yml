@@ -1,9 +1,0 @@
-env:
-  browser: true
-
-extends:
-  - ../.eslintrc.yml
-
-settings:
-  react:
-    version: '18'
