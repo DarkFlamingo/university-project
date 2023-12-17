@@ -24,7 +24,7 @@ class RAM {
         },
         ...items.map((item, index) => ({
           'text': {
-            'text': [`${index + 1}) ${item.name} - $${item.price}`],
+            'text': [`${index + 1}) ${item.name} – $${item.price}`],
           },
         })),
       ],
